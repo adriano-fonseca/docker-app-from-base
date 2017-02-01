@@ -1,6 +1,6 @@
-# Starting from a base image contruct an App Image
+# Constructing a system base image from a Java Application
 
-The image adrianofonseca/wildfly-app is basically the Wildfly server costumised with Postgres Driver Module and a Datasource AppDS that searchs for a Postgres Server named postgres running in the default port 5432.
+The image adrianofonseca/wildfly-app is basically the Wildfly server customized with Postgres Driver Module and a Datasource AppDS. This image to run requires a Postgres Server named postgres running in the default port 5432.
 
 The connection configuration in the container is as follows:
 
@@ -28,27 +28,32 @@ The connection configuration in the container is as follows:
                 </drivers>
 ```
 
-To construct the project just check out PlayWithJEE in https://github.com/adriano-fonseca/PlayWithJEE and build it using the follow Maven command:
+To construct the project just check out PlayWithJEE in https://github.com/adriano-fonseca/PlayWithJEE and build it using the follow Maven command to package the application:
 
 ```shell
 mvn package -Dmaven.test.skip=true
 
 ```
-After that you must find the target folder PlayJavaEE.war
 
-In order to run the image that will be built with the Dockerfile, you need to have a Postgress Server running. In order to do that you can start the image adrianofonseca/postgres:9.5. That can be made with the follow line:
+After that you must find the target folder PlayJavaEE.war, just copy the file to your Build context folder and run the command:
+
+```shell
+docker image build -t app-image .
+
+```
+
+In order to run the image that you have built, you need to have  a Postgres Server running. You can get one through the adrianofonseca/postgres:9.5 image. To run the postgres container:
 
 ```shell
 docker container run --name db --rm -p 5432:5432 -v /home/adr-fonseca/docker/docker-postgres/postgresql/:/var/lib/postgresql -e DB_USER=app -e DB_PASS=app -e DB_NAME=app sameersbn/postgresql:9.5-3
 
 ```
 
-To run the app
+Having Postgres running you can run the app Image with
 
 ```shell
-docker container run --name app --rm -p 8080:8080 -p 9990:9990 --link db:postgres <app-image-name>
+docker container run --name app --rm -p 8080:8080 -p 9990:9990 --link db:postgres app-image
 
 ```
  
-
-
+You can get the docker compose file to run this conceptual application easily and also a docker compose file version 3 to deploy as stack in Swarm Cluster [here](https://github.com/adriano-fonseca/docker-stack). 
