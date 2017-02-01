@@ -35,3 +35,20 @@ mvn package -Dmaven.test.skip=true
 
 ```
 After that you must find the target folder PlayJavaEE.war
+
+In order to run the image that will be built with the Dockerfile, you need to have a Postgress Server running. In order to do that you can start the image adrianofonseca/postgres:9.5. That can be made with the follow line:
+
+```shell
+docker container run --name db --rm -p 5432:5432 -v /home/adr-fonseca/docker/docker-postgres/postgresql/:/var/lib/postgresql -e DB_USER=app -e DB_PASS=app -e DB_NAME=app sameersbn/postgresql:9.5-3
+
+```
+
+To run the app
+
+```shell
+docker container run --name app --rm -p 8080:8080 -p 9990:9990 --link db:postgres <app-image-name>
+
+```
+ 
+
+
