@@ -1,4 +1,4 @@
-# Constructing a system base image from a Java Application
+# Constructing a system base image to a Java Application
 
 The image adrianofonseca/wildfly-app is basically the Wildfly server customized with Postgres Driver Module and a Datasource AppDS. This image to run requires a Postgres Server named postgres running in the default port 5432.
 
