@@ -45,7 +45,7 @@ docker image build -t app-image .
 In order to run the image that you have built, you need to have  a Postgres Server running. You can get one through the adrianofonseca/postgres:9.5 image. To run the postgres container:
 
 ```shell
-docker container run --name db --rm -p 5432:5432 -v /home/adr-fonseca/docker/docker-postgres/postgresql/:/var/lib/postgresql -e DB_USER=app -e DB_PASS=app -e DB_NAME=app sameersbn/postgresql:9.5-3
+docker container run --name db --rm -p 5432:5432 -v /home/adr-fonseca/docker/docker-postgres/postgresql/:/var/lib/postgresql -e DB_USER=app -e DB_PASS=app -e DB_NAME=app adrianofonseca/postgres:9.5
 
 ```
 
